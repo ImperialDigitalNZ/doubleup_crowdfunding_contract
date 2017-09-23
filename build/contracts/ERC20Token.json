@@ -1,0 +1,240 @@
+{
+  "contract_name": "ERC20Token",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_spender",
+          "type": "address"
+        },
+        {
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "approve",
+      "outputs": [
+        {
+          "name": "success",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "totalSupply",
+      "outputs": [
+        {
+          "name": "totalSupply",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_from",
+          "type": "address"
+        },
+        {
+          "name": "_to",
+          "type": "address"
+        },
+        {
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "transferFrom",
+      "outputs": [
+        {
+          "name": "success",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_owner",
+          "type": "address"
+        }
+      ],
+      "name": "balanceOf",
+      "outputs": [
+        {
+          "name": "balance",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "acceptOwnership",
+      "outputs": [],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_to",
+          "type": "address"
+        },
+        {
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "transfer",
+      "outputs": [
+        {
+          "name": "success",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "newOwner",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_owner",
+          "type": "address"
+        },
+        {
+          "name": "_spender",
+          "type": "address"
+        }
+      ],
+      "name": "allowance",
+      "outputs": [
+        {
+          "name": "remaining",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_from",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "_to",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "_value",
+          "type": "uint256"
+        }
+      ],
+      "name": "Transfer",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_owner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "_spender",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "_value",
+          "type": "uint256"
+        }
+      ],
+      "name": "Approval",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_from",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "_to",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    }
+  ],
+  "unlinked_binary": "0x606060405260006002555b60008054600160a060020a03191633600160a060020a03161790555b5b610778806100366000396000f300606060405236156100a15763ffffffff7c0100000000000000000000000000000000000000000000000000000000600035041663095ea7b381146100a657806318160ddd146100dc57806323b872dd1461010157806370a082311461013d57806379ba50971461016e5780638da5cb5b14610183578063a9059cbb146101b2578063d4ee1d90146101e8578063dd62ed3e14610217578063f2fde38b1461024e575b600080fd5b34156100b157600080fd5b6100c8600160a060020a036004351660243561026f565b604051901515815260200160405180910390f35b34156100e757600080fd5b6100ef610316565b60405190815260200160405180910390f35b341561010c57600080fd5b6100c8600160a060020a036004358116906024351660443561031d565b604051901515815260200160405180910390f35b341561014857600080fd5b6100ef600160a060020a03600435166104c0565b60405190815260200160405180910390f35b341561017957600080fd5b6101816104df565b005b341561018e57600080fd5b610196610568565b604051600160a060020a03909116815260200160405180910390f35b34156101bd57600080fd5b6100c8600160a060020a0360043516602435610577565b604051901515815260200160405180910390f35b34156101f357600080fd5b610196610697565b604051600160a060020a03909116815260200160405180910390f35b341561022257600080fd5b6100ef600160a060020a03600435811690602435166106a6565b60405190815260200160405180910390f35b341561025957600080fd5b610181600160a060020a03600435166106d3565b005b60008115806102a15750600160a060020a03338116600090815260046020908152604080832093871683529290522054155b15156102ac57600080fd5b600160a060020a03338116600081815260046020908152604080832094881680845294909152908190208590557f8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b9259085905190815260200160405180910390a35060015b92915050565b6002545b90565b600160a060020a03831660009081526003602052604081205482901080159061036d5750600160a060020a0380851660009081526004602090815260408083203390941683529290522054829010155b80156103795750600082115b801561039e5750600160a060020a038316600090815260036020526040902054828101115b156104b457600160a060020a0384166000908152600360205260409020546103cc908363ffffffff61071b16565b600160a060020a038086166000908152600360209081526040808320949094556004815283822033909316825291909152205461040f908363ffffffff61071b16565b600160a060020a0380861660009081526004602090815260408083203385168452825280832094909455918616815260039091522054610455908363ffffffff61073216565b600160a060020a03808516600081815260036020526040908190209390935591908616907fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef9085905190815260200160405180910390a35060016104b8565b5060005b5b9392505050565b600160a060020a0381166000908152600360205260409020545b919050565b60015433600160a060020a039081169116141561056557600154600054600160a060020a0391821691167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e060405160405180910390a36001546000805473ffffffffffffffffffffffffffffffffffffffff1916600160a060020a039092169190911790555b5b565b600054600160a060020a031681565b600160a060020a0333166000908152600360205260408120548290108015906105a05750600082115b80156105c55750600160a060020a038316600090815260036020526040902054828101115b1561068857600160a060020a0333166000908152600360205260409020546105f3908363ffffffff61071b16565b600160a060020a033381166000908152600360205260408082209390935590851681522054610628908363ffffffff61073216565b600160a060020a0380851660008181526003602052604090819020939093559133909116907fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef9085905190815260200160405180910390a3506001610310565b506000610310565b5b92915050565b600154600160a060020a031681565b600160a060020a038083166000908152600460209081526040808320938516835292905220545b92915050565b60005433600160a060020a039081169116146106ee57600080fd5b6001805473ffffffffffffffffffffffffffffffffffffffff1916600160a060020a0383161790555b5b50565b60008282111561072757fe5b508082035b92915050565b60008282018381101561074157fe5b8091505b50929150505600a165627a7a7230582008fedafea08180e5aee4d6307f10b67e9848f5f77415d2767347e488939e61040029",
+  "networks": {},
+  "schema_version": "0.0.5",
+  "updated_at": 1506129060250
+}

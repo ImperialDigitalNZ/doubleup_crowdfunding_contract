@@ -1,0 +1,25 @@
+// deploy
+c1 = CrowdFundingDoubleUp.deployed()
+
+// check period
+c1.then(inst=>inst.getCurrentPeriodTest())
+
+c1.then(inst=>inst.getCurrentPeriodTest.call())
+
+c1.then(inst=>inst.stopPresaleTest())
+
+
+// send ether
+c1.then(instance => instance.sendTransaction({from:web3.eth.accounts[3], value:web3.toWei(100, "ether")}))
+
+c1.then(inst=>inst.weiRaised())
+
+acctBal = web3.fromWei(web3.eth.getBalance(web3.eth.accounts[3]), "ether")
+
+// set amount -> token amount!, not DOUP amount
+c1.then(inst=>inst.setTokensPerEther(200))      // must be token value!!! 2 doup -> 200 tokens
+
+// distribute and check get balance
+c1.then(inst=>inst.distributeBalance(web3.eth.accounts[3]))
+c1.then(inst=>inst.getBalance.call(web3.eth.accounts[3]))
+
