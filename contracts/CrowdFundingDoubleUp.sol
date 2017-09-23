@@ -273,6 +273,13 @@ contract CrowdFundingDoubleUp is ERC20Token {
         return msg.value != 0 && at > START_OF_ICO && at < END_OF_ICO;
     }
 
+    function getBalance(address addr) hasEnded returns (uint256) {
+        return balanceOf(addr);
+    }
+
+    function getTokenPerEther() constant returns (uint) {
+        return tokensPerEther;
+    }
     
     // ------------------------------------------------------------------------------- //
     // after funding 
@@ -306,11 +313,9 @@ contract CrowdFundingDoubleUp is ERC20Token {
         owner.transfer(_etherContributed);
     }
 
-    function getBalance(address addr) hasEnded returns (uint256) {
-        return balanceOf(addr);
-    }
     // return total token amount (including bonus) for each participant
-    function getTotalBalance(address addr) hasEnded returns (uint256) {
+    function getTotalBalance(address addr) internal constant returns (uint256) {
+        require(now > END_OF_ICO);
         require(tokensPerEther > 0);
 
         if(contributes[addr][KEY_PS] > 0) {
@@ -364,16 +369,15 @@ contract CrowdFundingDoubleUp is ERC20Token {
         .add(contributes[addr][KEY_W3])
         .add(contributes[addr][KEY_W4]);
     }
+    // ------------------------------------------------------------------------------- //
+    // after funding - end
+    // ------------------------------------------------------------------------------- //
 
     // test
     function stopPresaleTest() constant returns (bool) {
         return stopPresale(now);
     }
 
-    function getTokenPerEther() constant returns (uint) {
-        return tokensPerEther;
-    }
-    
     // test
     function getCurrentPeriodTest() returns (uint256 at, string period, uint256 icoperiod) {
         at = now;
