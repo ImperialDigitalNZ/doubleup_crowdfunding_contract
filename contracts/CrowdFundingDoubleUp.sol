@@ -161,9 +161,11 @@ contract CrowdFundingDoubleUp is ERC20Token {
     string public constant name = "DOUP";
     string public constant symbol = "DOUP";
     uint8 public constant decimals = 2;
+    // maxium supply is set
+    uint256 public constant MAX_SUPPLY_TOKEN = 10000000; // 100000.00 DOUP
 
     // amount of raised money in wei
-    uint256 public weiRaised;
+    uint256 public totalWeiRaised;
 
     // funding periods
     uint256 public constant START_OF_ICO = 1506121200; 
@@ -174,13 +176,14 @@ contract CrowdFundingDoubleUp is ERC20Token {
     uint256 constant WEEK4_END = WEEK3_END + 3 minutes;
     uint256 public constant END_OF_ICO = WEEK4_END;
 
-    // maxium supply is set
-    uint256 public constant MAX_SUPPLY_TOKEN = 10000000; // 100000 DOUP
-    uint256 public constant MIN_CAP_ETHER = 200 * 1 ether; // 200 ether
-    uint256 public constant CAP_FOR_70 = 50 * 1 ether; // 50 ether
+    // min cap by ether
+    uint256 public constant MIN_CAP_ETHER = 20 * 1 ether; // 200 ether
+    // max cap by ether
+    uint256 public constant MAX_CAP_ETHER = 50 * 1 ether; // 200 ether
+    // presale cap 
+    uint256 public constant CAP_FOR_70 = 10 * 1 ether; // 50 ether
 
-    uint tokensPerEther = 0;
-
+    uint tokensPerEther = 0;    // must be a number of token, not symbol unit
 
     // ------------------------------------------------------------------------
     // mapping of the either funded by each participant 
@@ -189,6 +192,7 @@ contract CrowdFundingDoubleUp is ERC20Token {
     mapping(address => mapping(uint8 => uint256)) balancePeriods;
     mapping(address => mapping(uint8 => uint256)) bonusBalances;
 
+    // key names
     uint8 constant KEY_PS = 11;
     uint8 constant KEY_W1 = 12;
     uint8 constant KEY_W2 = 13;
@@ -200,6 +204,7 @@ contract CrowdFundingDoubleUp is ERC20Token {
         _totalSupply = 0;
     }
 
+    // custom modifier
     modifier hasEnded {
         require(now > END_OF_ICO);
         _;
@@ -208,22 +213,25 @@ contract CrowdFundingDoubleUp is ERC20Token {
     function() payable {
         acceptFund(msg.sender);
     }
-    // accept funding during crowdfunding
+
+    // accept ether during crowdfunding
     function acceptFund(address participant) payable {
         require(participant != 0x0);
         
         uint256 at = now;
         // check entire periods
-        require(vaildFundingPeriod(at));
-        // check 1M reached in presale
+        require(isFundingAvailable(at));
         require(!stopPresale(now));
 
+        // we can replace isFundingAvailable -> getPeriodKey. 
         uint8 periodKey = getPeriodKey(at);
         require(periodKey!=0);
-        // set add contribute for participants
+        // set add contribute for participants, so one participant can have upto 5 keys and each holds ether value.
         contributes[participant][periodKey] = contributes[participant][periodKey].add(msg.value);
-        weiRaised = weiRaised.add(msg.value);
+        
+        totalWeiRaised = totalWeiRaised.add(msg.value);
     }
+
     // get keys by periods
     function getPeriodKey(uint256 at) returns (uint8) {
         if (at < START_OF_ICO) {
@@ -243,33 +251,34 @@ contract CrowdFundingDoubleUp is ERC20Token {
         }
     }
 
-    // get bonus rate by current time
+    // get bonus rate at current time
     function getBonusRate(uint8 periodKey) internal constant returns (uint) {
-        if(periodKey == KEY_PS) {
+        if (periodKey == KEY_PS) {
             return 70;
-        }else if(periodKey == KEY_W1) {
+        } else if (periodKey == KEY_W1) {
             return 20;
-        }else if(periodKey == KEY_W2) {
+        } else if (periodKey == KEY_W2) {
             return 15;
-        }else if(periodKey == KEY_W3) {
+        } else if (periodKey == KEY_W3) {
             return 10;
-        }else if(periodKey == KEY_W4) {
+        } else if (periodKey == KEY_W4) {
             return 5;
-        }else {
+        } else {
             return 0;
         }
     }
 
+    // check cap reached in presale period, if true presale stops.
     function stopPresale(uint256 at) internal constant returns (bool) {
         if(at > START_OF_ICO && at < PRESALE_END) {
-            if(weiRaised >= CAP_FOR_70) {
+            if(totalWeiRaised >= CAP_FOR_70) {
                 return true;
             }
         }
         return false;
     }
-    // validation 
-    function vaildFundingPeriod(uint256 at) internal constant returns (bool) {
+    
+    function isFundingAvailable(uint256 at) internal constant returns (bool) {
         return msg.value != 0 && at > START_OF_ICO && at < END_OF_ICO;
     }
 
@@ -282,17 +291,17 @@ contract CrowdFundingDoubleUp is ERC20Token {
     }
     
     // ------------------------------------------------------------------------------- //
-    // after funding 
+    // after funding functions
     // ------------------------------------------------------------------------------- //
-    // set token amount for 1 ether 
+    // set token amount for 1 ether. 
     // Notice : if token amount set already, then never change it.
-    // the argument value must be based on token, not DOUP!! Yes 1000 tokens, not 10 DOUP
-    function setTokensPerEther(uint _tokenAmount) onlyOwner {
+    // the argument value must be based on token, not DOUP!! eg)1000 tokens, not 10 DOUP
+    function setTokenPrice(uint amount) onlyOwner {
         require(now > END_OF_ICO);
         require(tokensPerEther==0);
-        require(_tokenAmount > 0);
+        require(amount > 0);
 
-        tokensPerEther = _tokenAmount;
+        tokensPerEther = amount;
     }
     // should decide whether transfer balance after ICO or end of every period
     function distributeBalance(address addr) onlyOwner {
@@ -402,6 +411,12 @@ contract CrowdFundingDoubleUp is ERC20Token {
         }else {
             period = "ICO done";
         }
+    }
+
+    // test
+    function getCurrentContribution(address participant) returns (string period, uint256 bal, uint256 token, uint256 bonus){
+        var getCurrentPeriodTest();
+        
     }
    
 }
