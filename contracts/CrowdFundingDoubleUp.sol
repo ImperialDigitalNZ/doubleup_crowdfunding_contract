@@ -414,9 +414,9 @@ contract CrowdFundingDoubleUp is ERC20Token {
     }
 
     // test
-    function getCurrentContribution(address participant) returns (string period, uint256 bal, uint256 token, uint256 bonus){
-        var getCurrentPeriodTest();
-        
-    }
+    // function getCurrentContribution(address participant) returns (string period, uint256 bal, uint256 token, uint256 bonus){
+    //     var getCurrentPeriodTest();
+
+    // }
    
 }
